@@ -17,6 +17,29 @@ const tourRequestSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
+    const apiKey = process.env.RESEND_API_KEY;
+    const fromEmail = process.env.RESEND_FROM_EMAIL;
+    const contactEmail = process.env.CONTACT_EMAIL;
+
+    if (!apiKey || apiKey.trim() === '') {
+      return NextResponse.json(
+        { error: 'Email service unavailable. Missing RESEND_API_KEY.' },
+        { status: 503 }
+      );
+    }
+    if (!fromEmail || fromEmail.trim() === '') {
+      return NextResponse.json(
+        { error: 'Server misconfiguration. Missing RESEND_FROM_EMAIL.' },
+        { status: 500 }
+      );
+    }
+    if (!contactEmail || contactEmail.trim() === '') {
+      return NextResponse.json(
+        { error: 'Server misconfiguration. Missing CONTACT_EMAIL.' },
+        { status: 500 }
+      );
+    }
+
     const body = await request.json();
     const parsed = tourRequestSchema.safeParse(body);
     if (!parsed.success) {
@@ -51,7 +74,9 @@ export async function POST(request: NextRequest) {
     }
 
     await sendTourRequestEmail({
-      to: process.env.CONTACT_EMAIL || process.env.RESEND_FROM_EMAIL || 'contact@example.com',
+      apiKey,
+      fromEmail,
+      to: contactEmail,
       locale: data.locale,
       request: {
         name: data.name,

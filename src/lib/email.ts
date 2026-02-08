@@ -1,8 +1,8 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
-type TourRequestEmail = {
+export type TourRequestEmailParams = {
+  apiKey: string;
+  fromEmail: string;
   to: string;
   locale: 'en' | 'es';
   request: {
@@ -41,7 +41,8 @@ const templates = {
   },
 };
 
-export async function sendTourRequestEmail({ to, locale, request }: TourRequestEmail) {
+export async function sendTourRequestEmail({ apiKey, fromEmail, to, locale, request }: TourRequestEmailParams) {
+  const resend = new Resend(apiKey);
   const t = templates[locale];
   const html = `
     <h2>${t.greeting}</h2>
@@ -56,7 +57,7 @@ export async function sendTourRequestEmail({ to, locale, request }: TourRequestE
   `;
 
   const { error } = await resend.emails.send({
-    from: process.env.RESEND_FROM_EMAIL || 'Guía Alhambra <onboarding@resend.dev>',
+    from: fromEmail,
     to: [to],
     subject: t.subject,
     html,
