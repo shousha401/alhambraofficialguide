@@ -1,4 +1,5 @@
 import { getTranslations } from 'next-intl/server';
+import Image from 'next/image';
 import { Link } from '@/i18n/navigation';
 import { createServerSupabaseClient } from '@/lib/supabase/server';
 
@@ -195,10 +196,12 @@ async function TourCard({
     >
       <div className="aspect-[4/3] bg-stone-200 relative overflow-hidden">
         {tour.image_url ? (
-          <img
+          <Image
             src={tour.image_url}
             alt={title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            fill
+            sizes="(max-width: 768px) 100vw, 33vw"
+            className="object-cover group-hover:scale-105 transition-transform duration-500"
           />
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-terracotta-400/20 to-tile-400/20 flex items-center justify-center">

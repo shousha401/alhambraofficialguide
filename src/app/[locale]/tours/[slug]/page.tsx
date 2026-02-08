@@ -1,4 +1,5 @@
 import { getTranslations } from 'next-intl/server';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { Link } from '@/i18n/navigation';
 import { createServerSupabaseClient } from '@/lib/supabase/server';
@@ -54,8 +55,8 @@ export default async function TourDetailPage({
     <div className="py-16 md:py-24">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {tour.image_url && (
-          <div className="aspect-video rounded-xl overflow-hidden mb-8 bg-primary-200">
-            <img src={tour.image_url} alt={title} className="w-full h-full object-cover" />
+          <div className="aspect-video rounded-xl overflow-hidden mb-8 bg-primary-200 relative">
+            <Image src={tour.image_url} alt={title} fill sizes="(max-width: 1024px) 100vw, 896px" className="object-cover" />
           </div>
         )}
 

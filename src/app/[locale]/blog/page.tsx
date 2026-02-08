@@ -1,4 +1,5 @@
 import { getTranslations } from 'next-intl/server';
+import Image from 'next/image';
 import { Link } from '@/i18n/navigation';
 import { createServerSupabaseClient } from '@/lib/supabase/server';
 
@@ -42,8 +43,8 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
                 <article key={post.id} className="border-b border-primary-200 pb-8">
                   <Link href={`/blog/${post.slug}`} className="group block">
                     {post.image_url && (
-                      <div className="aspect-video rounded-lg overflow-hidden mb-4 bg-primary-200">
-                        <img src={post.image_url} alt={title} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
+                      <div className="aspect-video rounded-lg overflow-hidden mb-4 bg-primary-200 relative">
+                        <Image src={post.image_url} alt={title} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover group-hover:scale-105 transition-transform" />
                       </div>
                     )}
                     <h2 className="font-serif text-2xl font-bold text-primary-800 group-hover:text-primary-600">

@@ -1,4 +1,5 @@
 import { getTranslations } from 'next-intl/server';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { Link } from '@/i18n/navigation';
 import { createServerSupabaseClient } from '@/lib/supabase/server';
@@ -59,8 +60,8 @@ export default async function BlogPostPage({
           ← {t('backToBlog')}
         </Link>
         {post.image_url && (
-          <div className="aspect-video rounded-xl overflow-hidden mb-8 bg-primary-200">
-            <img src={post.image_url} alt={title} className="w-full h-full object-cover" />
+          <div className="aspect-video rounded-xl overflow-hidden mb-8 bg-primary-200 relative">
+            <Image src={post.image_url} alt={title} fill sizes="(max-width: 1024px) 100vw, 768px" className="object-cover" />
           </div>
         )}
         <h1 className="font-serif text-3xl md:text-4xl font-bold text-primary-900 mb-4">{title}</h1>

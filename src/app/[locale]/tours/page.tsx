@@ -1,4 +1,5 @@
 import { getTranslations } from 'next-intl/server';
+import Image from 'next/image';
 import { Link } from '@/i18n/navigation';
 import { createServerSupabaseClient } from '@/lib/supabase/server';
 
@@ -47,8 +48,8 @@ export default async function ToursPage({ params }: { params: Promise<{ locale: 
                   className="group block bg-white rounded-xl overflow-hidden shadow-sm border border-primary-100 hover:shadow-md transition-shadow"
                 >
                   {tour.image_url ? (
-                    <div className="aspect-[4/3] bg-primary-200 overflow-hidden">
-                      <img src={tour.image_url} alt={title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                    <div className="aspect-[4/3] bg-primary-200 overflow-hidden relative">
+                      <Image src={tour.image_url} alt={title} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover group-hover:scale-105 transition-transform duration-300" />
                     </div>
                   ) : (
                     <div className="aspect-[4/3] bg-gradient-to-br from-primary-300 to-primary-400 flex items-center justify-center">
