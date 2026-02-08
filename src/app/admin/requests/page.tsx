@@ -7,10 +7,11 @@ export default async function AdminRequestsPage() {
     .select('id, name, email, phone, message, preferred_date, number_of_guests, locale, status, created_at, tour_id')
     .order('created_at', { ascending: false });
 
-  const tourIds = (requests ?? [])
-    .map((r) => r.tour_id)
-    .filter((id): id is string => Boolean(id))
-    .filter((id, i, arr) => arr.indexOf(id) === i);
+  const tourIds = (requests ?? []).reduce<string[]>((acc, r) => {
+    const id = r.tour_id;
+    if (id && !acc.includes(id)) acc.push(id);
+    return acc;
+  }, []);
   const { data: tours } = tourIds.length > 0
     ? await supabase.from('tours').select('id, title_en, title_es').in('id', tourIds)
     : { data: [] };
