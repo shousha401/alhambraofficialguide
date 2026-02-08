@@ -21,7 +21,8 @@
     "featured": {
       "title": "Featured Tours",
       "subtitle": "Choose from our curated selection of Alhambra experiences",
-      "viewAll": "View All Tours"
+      "viewAll": "View All Tours",
+    "viewTour": "View tour"
     },
     "whyUs": {
       "title": "Why Choose Us",

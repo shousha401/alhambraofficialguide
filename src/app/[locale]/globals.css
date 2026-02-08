@@ -4,7 +4,22 @@
 
 @layer base {
   :root {
-    --font-inter: 'Inter', system-ui, sans-serif;
-    --font-playfair: 'Playfair Display', Georgia, serif;
+    --font-cormorant: 'Cormorant Garamond', Georgia, serif;
+    --font-dm-sans: 'DM Sans', system-ui, sans-serif;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply text-stone-800;
+  }
+  ::selection {
+    @apply bg-gold-400/30 text-stone-900;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
   }
 }

@@ -2,6 +2,9 @@ import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { createServerSupabaseClient } from '@/lib/supabase/server';
 
+// Always fetch fresh tours (no static cache)
+export const dynamic = 'force-dynamic';
+
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'tours' });
@@ -11,12 +14,18 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 export default async function ToursPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const t = await getTranslations('tours');
-  const supabase = await createServerSupabaseClient();
-  const { data: tours } = await supabase
-    .from('tours')
-    .select('*')
-    .eq('published', true)
-    .order('sort_order', { ascending: true });
+  let tours: { id: string; slug: string; title_en: string; title_es: string; short_description_en: string; short_description_es: string; duration_minutes: number; image_url: string | null }[] = [];
+  try {
+    const supabase = await createServerSupabaseClient();
+    const { data } = await supabase
+      .from('tours')
+      .select('*')
+      .eq('published', true)
+      .order('sort_order', { ascending: true });
+    tours = data ?? [];
+  } catch {
+    tours = [];
+  }
 
   const isEs = locale === 'es';
 

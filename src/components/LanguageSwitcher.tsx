@@ -19,7 +19,7 @@ export function LanguageSwitcher() {
   };
 
   return (
-    <div className="flex rounded-lg border border-primary-200 overflow-hidden">
+    <div className="flex rounded-md border border-stone-700 overflow-hidden">
       {locales.map(({ code, label }) => (
         <button
           key={code}
@@ -27,8 +27,8 @@ export function LanguageSwitcher() {
           onClick={() => switchLocale(code)}
           className={`px-3 py-1.5 text-sm font-medium transition-colors ${
             locale === code
-              ? 'bg-primary-700 text-white'
-              : 'bg-white text-primary-600 hover:bg-primary-50'
+              ? 'bg-gold-500 text-stone-950'
+              : 'bg-transparent text-sand hover:bg-stone-800 hover:text-cream'
           }`}
         >
           {label}

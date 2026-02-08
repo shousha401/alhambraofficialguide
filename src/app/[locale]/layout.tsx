@@ -4,13 +4,8 @@ import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
-import { HreflangTags } from '@/components/HreflangTags';
+import { SetLocaleAttr } from '@/components/SetLocaleAttr';
 import type { Metadata } from 'next';
-import { Inter, Playfair_Display } from 'next/font/google';
-import './globals.css';
-
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
-const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' });
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -25,6 +20,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       default: isEn
         ? 'Guía Oficial de la Alhambra | Official Alhambra Tours in Granada'
         : 'Guía Oficial de la Alhambra | Tours Oficiales de la Alhambra en Granada',
+      template: '%s | Guía Oficial de la Alhambra',
     },
     description: isEn
       ? 'Official guided tours of the Alhambra in Granada, Spain. Book your Alhambra experience with licensed official guides.'
@@ -56,17 +52,13 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className={`${inter.variable} ${playfair.variable}`}>
-      <head>
-        <HreflangTags locale={locale} />
-      </head>
-      <body className="min-h-screen flex flex-col font-sans antialiased bg-primary-50">
-        <NextIntlClientProvider messages={messages}>
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <>
+      <SetLocaleAttr locale={locale} />
+      <NextIntlClientProvider messages={messages}>
+        <Header />
+        <main className="flex-1">{children}</main>
+        <Footer />
+      </NextIntlClientProvider>
+    </>
   );
 }

@@ -8,70 +8,57 @@ export function Footer() {
   const tNav = useTranslations('nav');
 
   return (
-    <footer className="bg-primary-900 text-primary-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <footer className="relative bg-stone-950 text-sand overflow-hidden">
+      {/* Decorative pattern strip */}
+      <div className="h-1 bg-pattern-strip bg-repeat-x opacity-60" />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           <div>
-            <h3 className="font-serif text-lg font-bold text-white mb-2">
+            <h3 className="font-serif text-2xl font-semibold text-cream mb-3 tracking-tight">
               Guía Oficial de la Alhambra
             </h3>
-            <p className="text-sm text-primary-200">{t('description')}</p>
+            <p className="text-sand/90 text-sm leading-relaxed max-w-xs">
+              {t('description')}
+            </p>
           </div>
 
           <div>
-            <h4 className="font-semibold text-white mb-3">{t('quickLinks')}</h4>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/tours" className="text-primary-200 hover:text-white transition-colors">
-                  {tNav('tours')}
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="text-primary-200 hover:text-white transition-colors">
-                  {tNav('about')}
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="text-primary-200 hover:text-white transition-colors">
-                  {tNav('contact')}
-                </Link>
-              </li>
-              <li>
-                <Link href="/faq" className="text-primary-200 hover:text-white transition-colors">
-                  {tNav('faq')}
-                </Link>
-              </li>
-              <li>
-                <Link href="/blog" className="text-primary-200 hover:text-white transition-colors">
-                  {tNav('blog')}
-                </Link>
-              </li>
-              <li>
-                <Link href="/privacy" className="text-primary-200 hover:text-white transition-colors">
-                  {tNav('privacy')}
-                </Link>
-              </li>
-              <li>
-                <Link href="/terms" className="text-primary-200 hover:text-white transition-colors">
-                  {tNav('terms')}
-                </Link>
-              </li>
-              <li>
-                <Link href="/cancellation" className="text-primary-200 hover:text-white transition-colors">
-                  {tNav('cancellation')}
-                </Link>
-              </li>
+            <h4 className="font-semibold text-cream mb-4 tracking-wide uppercase text-xs">
+              {t('quickLinks')}
+            </h4>
+            <ul className="space-y-2.5">
+              {[
+                { href: '/tours', key: 'tours' },
+                { href: '/about', key: 'about' },
+                { href: '/contact', key: 'contact' },
+                { href: '/faq', key: 'faq' },
+                { href: '/blog', key: 'blog' },
+                { href: '/privacy', key: 'privacy' },
+                { href: '/terms', key: 'terms' },
+                { href: '/cancellation', key: 'cancellation' },
+              ].map(({ href, key }) => (
+                <li key={key}>
+                  <Link
+                    href={href}
+                    className="text-sand/80 hover:text-gold-400 transition-colors text-sm"
+                  >
+                    {tNav(key)}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
           <div>
-            <h4 className="font-semibold text-white mb-3">{t('contact')}</h4>
-            <p className="text-sm text-primary-200">Granada, Spain</p>
+            <h4 className="font-semibold text-cream mb-4 tracking-wide uppercase text-xs">
+              {t('contact')}
+            </h4>
+            <p className="text-sand/80 text-sm">Granada, Spain</p>
           </div>
         </div>
 
-        <div className="mt-8 pt-8 border-t border-primary-700">
-          <p className="text-sm text-primary-300 text-center">
+        <div className="mt-12 pt-8 border-t border-stone-800">
+          <p className="text-sm text-sand/60 text-center">
             {t('copyright', { year: new Date().getFullYear() })}
           </p>
         </div>

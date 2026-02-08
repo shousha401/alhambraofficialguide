@@ -2,11 +2,48 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createAdminSupabaseClient } from '@/lib/supabase/server';
 
 // TODO: Add auth check - verify admin session
+
+export async function DELETE(
+  _request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      return NextResponse.json(
+        { error: 'SUPABASE_SERVICE_ROLE_KEY is not set.' },
+        { status: 500 }
+      );
+    }
+    const { id } = await params;
+    const supabase = createAdminSupabaseClient();
+
+    // Delete related rows first (tour_requests has FK to tours without CASCADE)
+    await supabase.from('tour_requests').update({ tour_id: null }).eq('tour_id', id);
+    await supabase.from('availability_slots').delete().eq('tour_id', id);
+
+    const { error } = await supabase.from('tours').delete().eq('id', id);
+
+    if (error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+    return NextResponse.json({ success: true });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Internal error';
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
+}
+
 export async function PATCH(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      return NextResponse.json(
+        { error: 'SUPABASE_SERVICE_ROLE_KEY is not set. Add it to .env.local for admin updates.' },
+        { status: 500 }
+      );
+    }
     const { id } = await params;
     const body = await request.json();
 
@@ -30,7 +67,7 @@ export async function PATCH(
         max_group_size: body.max_group_size,
         image_url: body.image_url || null,
         featured: body.featured ?? false,
-        published: body.published ?? true,
+        published: body.published ?? false,
         updated_at: new Date().toISOString(),
       })
       .eq('id', id);
@@ -40,6 +77,7 @@ export async function PATCH(
     }
     return NextResponse.json({ success: true });
   } catch (err) {
-    return NextResponse.json({ error: 'Internal error' }, { status: 500 });
+    const message = err instanceof Error ? err.message : 'Internal error';
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

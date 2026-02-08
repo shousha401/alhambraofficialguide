@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 
 type Tour = {
@@ -31,6 +31,9 @@ type Tour = {
 export function TourEditor({ tour }: { tour: Tour }) {
   const router = useRouter();
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+  const publishNowRef = useRef(false);
   const [form, setForm] = useState({
     title_en: tour.title_en,
     title_es: tour.title_es,
@@ -56,27 +59,60 @@ export function TourEditor({ tour }: { tour: Tour }) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
+    setSuccess(false);
     setSaving(true);
+    const published = publishNowRef.current ? true : form.published;
+    publishNowRef.current = false;
     try {
       const res = await fetch(`/api/admin/tours/${tour.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...form,
+          published,
           inclusions_en: form.inclusions_en.split('\n').filter(Boolean),
           inclusions_es: form.inclusions_es.split('\n').filter(Boolean),
           exclusions_en: form.exclusions_en.split('\n').filter(Boolean),
           exclusions_es: form.exclusions_es.split('\n').filter(Boolean),
         }),
       });
-      if (res.ok) router.refresh();
+      const data = await res.json().catch(() => ({}));
+      if (res.ok) {
+        setSuccess(true);
+        if (published) setForm((f) => ({ ...f, published: true }));
+        router.refresh();
+      } else {
+        setError(data.error || `Save failed (${res.status})`);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Network error');
     } finally {
       setSaving(false);
     }
   };
 
+  const handlePublish = () => {
+    publishNowRef.current = true;
+    setForm((f) => ({ ...f, published: true }));
+    setError(null);
+    setSuccess(false);
+    const formEl = document.querySelector('form');
+    if (formEl) formEl.requestSubmit();
+  };
+
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      {error && (
+        <div className="p-4 rounded-lg bg-red-100 text-red-800 border border-red-200 text-sm">
+          {error}
+        </div>
+      )}
+      {success && (
+        <div className="p-4 rounded-lg bg-green-100 text-green-800 border border-green-200 text-sm">
+          Saved. Tour is {form.published ? 'published' : 'draft'} and visible on the site.
+        </div>
+      )}
       {(hasMissingEn || hasMissingEs) && (
         <div className="p-4 rounded-lg bg-amber-100 text-amber-800 border border-amber-200">
           <strong>Warning:</strong> Some translations are missing. {hasMissingEn && 'English: '} {hasMissingEn && (form.title_en ? '' : 'title/short description ')}
@@ -233,33 +269,50 @@ export function TourEditor({ tour }: { tour: Tour }) {
             className="w-full px-3 py-2 border rounded-lg"
           />
         </div>
-        <div className="flex gap-4 items-center">
-          <label className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              checked={form.featured}
-              onChange={(e) => setForm({ ...form, featured: e.target.checked })}
-            />
-            Featured
-          </label>
-          <label className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              checked={form.published}
-              onChange={(e) => setForm({ ...form, published: e.target.checked })}
-            />
-            Published
-          </label>
+        <div className="flex flex-col gap-1">
+          <div className="flex gap-4 items-center">
+            <label className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={form.featured}
+                onChange={(e) => setForm({ ...form, featured: e.target.checked })}
+              />
+              Featured
+            </label>
+            <label className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={form.published}
+                onChange={(e) => setForm({ ...form, published: e.target.checked })}
+              />
+              Published
+            </label>
+          </div>
+          <p className="text-sm text-gray-500">
+            Published = visible on Tours page. Featured = also shown on Home page (max 3).
+          </p>
         </div>
       </div>
 
-      <button
-        type="submit"
-        disabled={saving}
-        className="px-6 py-2 rounded-lg bg-accent-500 text-white font-semibold hover:bg-accent-600 disabled:opacity-50"
-      >
-        {saving ? 'Saving...' : 'Save'}
-      </button>
+      <div className="flex gap-3">
+        {!form.published && (
+          <button
+            type="button"
+            onClick={handlePublish}
+            disabled={saving}
+            className="px-6 py-2 rounded-lg bg-green-600 text-white font-semibold hover:bg-green-700 disabled:opacity-50"
+          >
+            {saving ? 'Saving...' : 'Publish tour'}
+          </button>
+        )}
+        <button
+          type="submit"
+          disabled={saving}
+          className="px-6 py-2 rounded-lg bg-accent-500 text-white font-semibold hover:bg-accent-600 disabled:opacity-50"
+        >
+          {saving ? 'Saving...' : 'Save'}
+        </button>
+      </div>
     </form>
   );
 }

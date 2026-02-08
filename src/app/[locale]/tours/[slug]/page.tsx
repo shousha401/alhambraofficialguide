@@ -4,6 +4,8 @@ import { Link } from '@/i18n/navigation';
 import { createServerSupabaseClient } from '@/lib/supabase/server';
 import { HreflangTags } from '@/components/HreflangTags';
 
+export const dynamic = 'force-dynamic';
+
 export async function generateMetadata({
   params,
 }: {
