@@ -1,0 +1,139 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "tours": "Tours",
+    "availability": "Disponibilidad",
+    "about": "Nosotros",
+    "contact": "Contacto",
+    "faq": "Preguntas",
+    "blog": "Blog",
+    "privacy": "Política de Privacidad",
+    "terms": "Términos de Servicio",
+    "cancellation": "Política de Cancelación"
+  },
+  "home": {
+    "hero": {
+      "title": "Descubre la Alhambra con un Guía Oficial",
+      "subtitle": "Tours expertos por la obra maestra Patrimonio de la Humanidad de Granada. Reserva tu experiencia inolvidable.",
+      "cta": "Ver Tours",
+      "ctaSecondary": "Consultar Disponibilidad"
+    },
+    "featured": {
+      "title": "Tours Destacados",
+      "subtitle": "Elige entre nuestra selección de experiencias en la Alhambra",
+      "viewAll": "Ver Todos los Tours"
+    },
+    "whyUs": {
+      "title": "Por Qué Elegirnos",
+      "subtitle": "Guías oficiales con décadas de experiencia combinada",
+      "expert": {
+        "title": "Guías Oficiales",
+        "desc": "Licenciados por la Junta de Andalucía, garantizando tours de la máxima calidad"
+      },
+      "personal": {
+        "title": "Experiencia Personal",
+        "desc": "Grupos pequeños para una exploración íntima y envolvente"
+      },
+      "flexible": {
+        "title": "Reserva Flexible",
+        "desc": "Consultas fáciles y programación flexible para tu visita"
+      }
+    },
+    "cta": {
+      "title": "¿Listo para explorar?",
+      "subtitle": "Envía una solicitud de tour y responderemos en 24 horas",
+      "button": "Solicitar un Tour"
+    }
+  },
+  "tours": {
+    "title": "Nuestros Tours",
+    "subtitle": "Descubre la Alhambra con nuestras experiencias guiadas",
+    "duration": "Duración",
+    "groupSize": "Tamaño del grupo",
+    "from": "Desde",
+    "requestTour": "Solicitar Este Tour",
+    "noTours": "No hay tours disponibles en este momento. Vuelve pronto."
+  },
+  "tourDetail": {
+    "overview": "Resumen",
+    "itinerary": "Itinerario",
+    "inclusions": "Qué Incluye",
+    "exclusions": "Qué No Incluye",
+    "duration": "Duración",
+    "groupSize": "Tamaño del Grupo",
+    "languages": "Idiomas",
+    "requestTour": "Solicitar Este Tour",
+    "checkAvailability": "Consultar Disponibilidad"
+  },
+  "availability": {
+    "title": "Consultar Disponibilidad",
+    "subtitle": "Selecciona un tour y fecha para ver horarios disponibles",
+    "selectTour": "Seleccionar tour",
+    "selectDate": "Seleccionar fecha",
+    "availableSlots": "Horarios disponibles",
+    "noSlots": "No hay horarios disponibles para esta fecha",
+    "submitRequest": "Enviar Solicitud"
+  },
+  "about": {
+    "title": "Sobre Nosotros",
+    "subtitle": "Guías oficiales de la Alhambra en Granada, España",
+    "mission": "Nuestra Misión",
+    "missionText": "Somos guías oficiales licenciados de la Alhambra y el Generalife, dedicados a compartir la rica historia y belleza de este Patrimonio de la Humanidad con visitantes de todo el mundo.",
+    "team": "Nuestro Equipo",
+    "teamText": "Nuestro equipo de guías experimentados aporta décadas de experiencia combinada en historia andaluza, arte islámico y patrimonio cultural de Granada.",
+    "experience": "Años de experiencia"
+  },
+  "contact": {
+    "title": "Contacto",
+    "subtitle": "Escríbenos para consultas de tours",
+    "name": "Nombre Completo",
+    "email": "Email",
+    "phone": "Teléfono (opcional)",
+    "tour": "Tour de Interés",
+    "date": "Fecha Preferida",
+    "guests": "Número de Personas",
+    "message": "Mensaje",
+    "submit": "Enviar Mensaje",
+    "success": "¡Gracias! Responderemos en 24 horas.",
+    "error": "Algo salió mal. Por favor, inténtalo de nuevo."
+  },
+  "faq": {
+    "title": "Preguntas Frecuentes",
+    "subtitle": "Respuestas a preguntas comunes sobre nuestros tours"
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Historias y reflexiones sobre la Alhambra",
+    "readMore": "Leer más",
+    "backToBlog": "Volver al Blog",
+    "publishedOn": "Publicado el"
+  },
+  "forms": {
+    "required": "Este campo es obligatorio",
+    "invalidEmail": "Por favor, introduce un email válido",
+    "minGuests": "Mínimo 1 persona",
+    "maxGuests": "Máximo 30 personas",
+    "minLength": "Debe tener al menos {min} caracteres",
+    "maxLength": "Debe tener como máximo {max} caracteres"
+  },
+  "footer": {
+    "description": "Tours guiados oficiales de la Alhambra en Granada, España.",
+    "quickLinks": "Enlaces Rápidos",
+    "contact": "Contacto",
+    "followUs": "Síguenos",
+    "copyright": "© {year} Guía Oficial de la Alhambra. Todos los derechos reservados."
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Ha ocurrido un error",
+    "back": "Volver",
+    "close": "Cerrar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar"
+  },
+  "legal": {
+    "lastUpdated": "Última actualización"
+  }
+}

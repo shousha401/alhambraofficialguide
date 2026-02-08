@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80">
+  <defs>
+    <pattern id="alhambra" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
+      <circle cx="40" cy="40" r="2" fill="currentColor" opacity="0.2"/>
+      <path d="M40 20 L44 36 L60 36 L46 46 L50 62 L40 52 L30 62 L34 46 L20 36 L36 36 Z" fill="none" stroke="currentColor" stroke-width="1" opacity="0.2"/>
+    </pattern>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#alhambra)" stroke="none"/>
+</svg>
