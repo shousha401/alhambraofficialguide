@@ -119,8 +119,9 @@
   },
   "footer": {
     "description": "Official guided tours of the Alhambra in Granada, Spain.",
-    "quickLinks": "Quick Links",
-    "contact": "Contact",
+    "quickLinks": "Explore",
+    "contact": "Info",
+    "legal": "Legal",
     "followUs": "Follow Us",
     "copyright": "© {year} Guía Oficial de la Alhambra. All rights reserved."
   },
