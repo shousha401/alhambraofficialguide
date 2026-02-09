@@ -72,8 +72,9 @@
     "selectTour": "Seleccionar tour",
     "selectDate": "Seleccionar fecha",
     "availableSlots": "Horarios disponibles",
-    "noSlots": "No hay horarios disponibles para esta fecha",
-    "submitRequest": "Enviar Solicitud"
+    "noSlots": "No hay horarios disponibles para esta fecha.",
+    "noSlotsContact": "Contáctanos para solicitar tu horario preferido.",
+    "submitRequest": "Consultar disponibilidad"
   },
   "about": {
     "title": "Sobre Nosotros",

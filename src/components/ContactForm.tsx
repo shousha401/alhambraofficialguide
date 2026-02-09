@@ -29,6 +29,7 @@ export function ContactForm({ locale, initialTourId, initialDate, initialTime }:
   const t = useTranslations('contact');
   const tForms = useTranslations('forms');
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const {
     register,
@@ -51,6 +52,7 @@ export function ContactForm({ locale, initialTourId, initialDate, initialTime }:
   }, [initialDate, initialTourId, setValue]);
 
   const onSubmit = async (data: ContactFormData) => {
+    setErrorMessage(null);
     try {
       const res = await fetch('/api/tour-request', {
         method: 'POST',
@@ -64,10 +66,16 @@ export function ContactForm({ locale, initialTourId, initialDate, initialTime }:
           numberOfGuests: data.numberOfGuests ?? null,
         }),
       });
-      if (!res.ok) throw new Error('Request failed');
+      const body = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setErrorMessage(typeof body?.error === 'string' ? body.error : t('error'));
+        setStatus('error');
+        return;
+      }
       setStatus('success');
       reset();
     } catch {
+      setErrorMessage(t('error'));
       setStatus('error');
     }
   };
@@ -78,7 +86,14 @@ export function ContactForm({ locale, initialTourId, initialDate, initialTime }:
     const msg = String(err.message);
     if (msg.includes('Email')) return tForms('invalidEmail');
     if (msg.includes('1') && msg.includes('30')) return tForms('maxGuests');
-    if (msg.includes('10') || msg.includes('2')) return tForms('minLength');
+    if (msg.includes('10') || msg.includes('2')) {
+      const min = key === 'name' ? 2 : key === 'message' ? 10 : 2;
+      return tForms('minLength', { min });
+    }
+    if (msg.includes('at most') || msg.includes('maximum')) {
+      const max = key === 'message' ? 500 : 30;
+      return tForms('maxLength', { max });
+    }
     return tForms('required');
   };
 
@@ -88,7 +103,9 @@ export function ContactForm({ locale, initialTourId, initialDate, initialTime }:
         <div className="p-4 rounded-lg bg-accent-100 text-accent-800">{t('success')}</div>
       )}
       {status === 'error' && (
-        <div className="p-4 rounded-lg bg-red-100 text-red-800">{t('error')}</div>
+        <div className="p-4 rounded-lg bg-red-100 text-red-800">
+          {errorMessage ?? t('error')}
+        </div>
       )}
 
       <div>

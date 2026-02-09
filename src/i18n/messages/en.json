@@ -72,8 +72,9 @@
     "selectTour": "Select a tour",
     "selectDate": "Select date",
     "availableSlots": "Available slots",
-    "noSlots": "No slots available for this date",
-    "submitRequest": "Submit Request"
+    "noSlots": "No slots available for this date.",
+    "noSlotsContact": "Contact us to request your preferred time.",
+    "submitRequest": "Check availability"
   },
   "about": {
     "title": "About Us",

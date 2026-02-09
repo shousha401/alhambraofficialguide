@@ -8,6 +8,7 @@ type TourOption = { id: string; slug: string; title: string };
 
 export function AvailabilityChecker({ tours, locale }: { tours: TourOption[]; locale: string }) {
   const t = useTranslations('availability');
+  const tNav = useTranslations('nav');
   const [tourId, setTourId] = useState('');
   const [date, setDate] = useState('');
   const [slots, setSlots] = useState<{ time: string }[]>([]);
@@ -80,7 +81,16 @@ export function AvailabilityChecker({ tours, locale }: { tours: TourOption[]; lo
         </div>
       )}
       {!loading && tourId && date && slots.length === 0 && (
-        <p className="text-primary-600">{t('noSlots')}</p>
+        <div className="mt-6 p-4 rounded-lg bg-primary-50 border border-primary-200">
+          <p className="text-primary-700 font-medium">{t('noSlots')}</p>
+          <p className="text-primary-600 text-sm mt-1">{t('noSlotsContact')}</p>
+          <Link
+            href="/contact"
+            className="inline-block mt-3 px-4 py-2 rounded-lg bg-accent-500 text-white text-sm font-semibold hover:bg-accent-600 transition-colors"
+          >
+            {tNav('contact')}
+          </Link>
+        </div>
       )}
     </div>
   );

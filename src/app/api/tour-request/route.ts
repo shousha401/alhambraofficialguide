@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createServerSupabaseClient } from '@/lib/supabase/server';
+import { createAdminSupabaseClient } from '@/lib/supabase/server';
 import { z } from 'zod';
 import { sendTourRequestEmail } from '@/lib/email';
 
@@ -40,6 +40,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    if (!serviceRoleKey || serviceRoleKey.trim() === '') {
+      return NextResponse.json(
+        { error: 'Server misconfiguration. Missing SUPABASE_SERVICE_ROLE_KEY.' },
+        { status: 500 }
+      );
+    }
+
     const body = await request.json();
     const parsed = tourRequestSchema.safeParse(body);
     if (!parsed.success) {
@@ -51,7 +59,7 @@ export async function POST(request: NextRequest) {
 
     const data = parsed.data;
 
-    const supabase = await createServerSupabaseClient();
+    const supabase = createAdminSupabaseClient();
     const { data: tourRequest, error: insertError } = await supabase
       .from('tour_requests')
       .insert({
@@ -92,6 +100,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: true, id: tourRequest?.id });
   } catch (err) {
     console.error('Tour request API error:', err);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    const message = err instanceof Error ? err.message : 'Internal server error';
+    return NextResponse.json(
+      { error: 'Unable to send your message. Please try again or email us directly.' },
+      { status: 500 }
+    );
   }
 }
