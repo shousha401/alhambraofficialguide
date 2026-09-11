@@ -124,7 +124,8 @@
     "contact": "Info",
     "legal": "Legal",
     "followUs": "Follow Us",
-    "copyright": "© {year} Guía Oficial de la Alhambra. All rights reserved."
+    "copyright": "© {year} Guía Oficial de la Alhambra. All rights reserved.",
+    "credit": "Website by <link>LocalFix</link>"
   },
   "common": {
     "loading": "Loading...",

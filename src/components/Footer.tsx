@@ -118,9 +118,25 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="mt-14 pt-8 border-t border-stone-800/80">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-sand/50 text-center sm:text-left order-2 sm:order-1">
-              {t('copyright', { year: new Date().getFullYear() })}
-            </p>
+            <div className="text-center sm:text-left order-2 sm:order-1">
+              <p className="text-sm text-sand/50">
+                {t('copyright', { year: new Date().getFullYear() })}
+              </p>
+              <p className="mt-1 text-sm text-sand/50">
+                {t.rich('credit', {
+                  link: (chunks) => (
+                    <a
+                      href="https://localfix.now"
+                      target="_blank"
+                      rel="noopener"
+                      className="text-sand/70 hover:text-gold-400 transition-colors"
+                    >
+                      {chunks}
+                    </a>
+                  ),
+                })}
+              </p>
+            </div>
             <div className="flex flex-wrap justify-center gap-x-6 gap-y-1 order-1 sm:order-2">
               {legalLinks.map(({ href, key }) => (
                 <Link
